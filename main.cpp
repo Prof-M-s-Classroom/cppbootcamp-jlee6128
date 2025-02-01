@@ -12,12 +12,19 @@ private:
 public:
     // Constructor
 
+    Robot(string n, string m, int b): name(n), model(m), batteryLife(b) {}
 
     // Getter Methods
 
+    string getName() {return name;}
+    string getModel() {return model;}
+    int getBatteryLife() {return batteryLife;}
 
     // Setter Methods
 
+    void setName (string n){name =n;}
+    void setModel(string m){model =m;}
+    void setBatteryLife(int b){batteryLife =b;}
 
     // Display function
     void displayRobot() {
@@ -26,11 +33,16 @@ public:
 };
 
 // Step 2: Function to modify robot (pass by value)
-
+void modifyRobot_byvalue ( Robot r) {
+    r.setBatteryLife(r.getBatteryLife());
+    cout<<"Inside function passing by the value:"<<r.getBatteryLife()<<endl;
+}
 
 // Step 3: Function to modify robot (pass by reference)
-
-
+void modifyRobot_byreference ( Robot& r) {
+    r.setBatteryLife(r.getBatteryLife());
+    cout<<"Inside function passing by the reference:"<<r.getBatteryLife()<<endl;
+}
 // Step 4: Template class for a Fleet that stores multiple robots
 template <typename T>
 class Fleet {
@@ -73,20 +85,22 @@ public:
 
 int main() {
     // Step 5: Create a Robot object
+Robot robot1("CS210", "Model_A", 80 );
 
 
 
     // Step 6: Use pointers to access Robot object
-
-   // cout << "Updated Battery Life (using pointer): " << robotPtr->getBatteryLife() << "%\n";
+    Robot* robotPtr = &robot1;
+   cout << "Updated Battery Life (using pointer): " << robotPtr->getBatteryLife() << "%\n";
 
     // Step 7: Pass by value (no change outside function)
-
-   // cout << "After modifyRobotByValue, Battery Life: " << myRobot.getBatteryLife() << "%\n";
+    modifyRobot_byvalue(robot1);
+    cout << "After modifyRobotByValue, Battery Life: " << robot1.getBatteryLife() << "%\n";
 
     // Step 8: Pass by reference (changes persist)
+    modifyRobot_byreference(robot1);
 
-   // cout << "After modifyRobotByReference, Battery Life: " << myRobot.getBatteryLife() << "%\n";
+    cout << "After modifyRobotByReference, Battery Life: " << robot1.getBatteryLife() << "%\n";
 
     // Step 9: Use the Fleet template class
     Fleet<string> myFleet(3);
